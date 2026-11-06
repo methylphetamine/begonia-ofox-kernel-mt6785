@@ -1,16 +1,9 @@
-// SPDX-License-Identifier: GPL-2.0
-/*
- * Copyright 2019 Google LLC
- */
-
-/*
- * Refer to Documentation/block/inline-encryption.rst for detailed explanation.
- */
-
-#define pr_fmt(fmt) "blk-crypto: " fmt
-
+/* SPDX-License-Identifier: GPL-2.0 */
 #include <linux/blk-crypto.h>
+#include <linux/keyslot-manager.h>
+#include <linux/export.h>
 #include <linux/blkdev.h>
+
 #include <linux/keyslot-manager.h>
 #include <linux/random.h>
 #include <linux/siphash.h>
@@ -307,11 +300,7 @@ EXPORT_SYMBOL_GPL(blk_crypto_evict_key);
 
 void blk_crypto_flock(struct keyslot_manager *ksm, unsigned int flags)
 {
-#ifdef CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK
-	ksm_flock(ksm, flags);
-#else
 	(void)ksm;
 	(void)flags;
-#endif
 }
 EXPORT_SYMBOL_GPL(blk_crypto_flock);
