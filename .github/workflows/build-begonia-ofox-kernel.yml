@@ -55,6 +55,9 @@ jobs:
           make O=out "$DEFCONFIG"
           # Make config non-interactive for CI
           scripts/config --file out/.config -d CONFIG_WERROR 2>/dev/null || true
+          # MTK/vendor 4.14 tree has warnings-as-errors not suitable for CI toolchain
+          scripts/config --file out/.config -d CC_WERROR 2>/dev/null || true
+          { echo 'KBUILD_CFLAGS += -Wno-error'; echo 'KCFLAGS += -Wno-error'; } >> out/.config 2>/dev/null || true
           yes "" | make O=out olddefconfig </dev/null || true
           scripts/config --file out/.config -d LD_DEAD_CODE_DATA_ELIMINATION 2>/dev/null || true
           yes "" | make O=out olddefconfig </dev/null || true
