@@ -61,7 +61,7 @@ jobs:
           yes "" | make O=out olddefconfig </dev/null || true
           scripts/config --file out/.config -d LD_DEAD_CODE_DATA_ELIMINATION 2>/dev/null || true
           yes "" | make O=out olddefconfig </dev/null || true
-          make -j"$(nproc)" O=out KCFLAGS="-Wno-error -Wno-format -Wno-misleading-indentation -Wno-pointer-compare -Wno-unused-variable -Wno-format-extra-args" 2>&1 | tee build.log
+          make -j"$(nproc)" O=out KCFLAGS="-Wno-error -Wno-format -Wno-misleading-indentation -Wno-pointer-compare -Wno-unused-variable -Wno-format-extra-args -Wno-duplicate-decl-specifier -Wno-switch-unreachable -Wno-implicit-fallthrough -Wno-address-of-packed-member -Wno-array-bounds -Wno-stringop-overflow" 2>&1 | tee build.log
           echo '--- outputs ---'
           find out -path '*arch/arm64/boot/*Image*' -maxdepth 5 | sort
           test -s out/arch/arm64/boot/Image.gz-dtb -o -s out/arch/arm64/boot/Image.gz
