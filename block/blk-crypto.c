@@ -307,6 +307,11 @@ EXPORT_SYMBOL_GPL(blk_crypto_evict_key);
 
 void blk_crypto_flock(struct keyslot_manager *ksm, unsigned int flags)
 {
+#ifdef CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK
 	ksm_flock(ksm, flags);
+#else
+	(void)ksm;
+	(void)flags;
+#endif
 }
 EXPORT_SYMBOL_GPL(blk_crypto_flock);
